@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+   <xsd:complexType name="fileDump">
+      <xsd:sequence>
+         <xsd:element name="base64Content" type="xsd:string" minOccurs="0"/>
+         <xsd:element name="base64FileName" type="xsd:string" minOccurs="0"/>
+         <xsd:element name="callInitiator" type="xsd:string" minOccurs="0"/>
+         <xsd:element name="callType" type="xsd:string" minOccurs="0"/>
+         <xsd:element name="channel" type="xsd:string" minOccurs="0"/>
+         <xsd:element name="corporateEmailId" type="xsd:string" minOccurs="0"/>
+         <xsd:element name="endTimeUtc" type="xsd:dateTime" minOccurs="0"/>
+         <xsd:element name="fileTranferedEnd" type="fileTranferedEnd" minOccurs="0" maxOccurs="unbounded" nillable="true"/>
+         <xsd:element name="fileTransferStatus" type="xsd:string" minOccurs="0"/>
+         <xsd:element name="fileTransferedEnd" type="xsd:string" minOccurs="0"/>
+         <xsd:element name="fileTransferedStarted" type="fileTransferedStarted" minOccurs="0" maxOccurs="unbounded" nillable="true"/>
+         <xsd:element name="loginName" type="xsd:string" minOccurs="0"/>
+         <xsd:element name="message" type="message" minOccurs="0" maxOccurs="unbounded" nillable="true"/>
+         <xsd:element name="messageId" type="xsd:string" minOccurs="0"/>
+         <xsd:element name="messageType" type="xsd:string" minOccurs="0"/>
+         <xsd:element name="network" type="xsd:string" minOccurs="0"/>
+         <xsd:element name="participantEntered" type="xsd:string" minOccurs="0"/>
+         <xsd:element name="participentEntered" type="particepentEntered" minOccurs="0" maxOccurs="unbounded" nillable="true"/>
+         <xsd:element name="participentExit" type="particepentExit" minOccurs="0" maxOccurs="unbounded" nillable="true"/>
+         <xsd:element name="roomId" type="xsd:string" minOccurs="0"/>
+         <xsd:element name="startTimeUtc" type="xsd:dateTime" minOccurs="0"/>
+         <xsd:element name="status" type="xsd:string" minOccurs="0"/>
+         <xsd:element name="threadId" type="xsd:string" minOccurs="0"/>
+         <xsd:element name="userFileName" type="xsd:string" minOccurs="0"/>
+         <xsd:element name="vendor" type="xsd:string" minOccurs="0"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="fileTranferedEnd">
+      <xsd:sequence>
+         <xsd:element name="createdDate" type="xsd:dateTime" minOccurs="0"/>
+         <xsd:element name="fileName" type="xsd:string" minOccurs="0"/>
+         <xsd:element name="fileTransferEndId" type="xsd:long" minOccurs="0"/>
+         <xsd:element name="loginName" type="xsd:string" minOccurs="0"/>
+         <xsd:element name="userDFileName" type="xsd:string" minOccurs="0"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="fileTransferedStarted">
+      <xsd:sequence>
+         <xsd:element name="createdDate" type="xsd:dateTime" minOccurs="0"/>
+         <xsd:element name="fileName" type="xsd:string" minOccurs="0"/>
+         <xsd:element name="fileTranferedId" type="xsd:long" minOccurs="0"/>
+         <xsd:element name="loginName" type="xsd:string" minOccurs="0"/>
+         <xsd:element name="userDFileName" type="xsd:string" minOccurs="0"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="message">
+      <xsd:sequence>
+         <xsd:element name="messageAttachedFile" type="xsd:string" minOccurs="0"/>
+         <xsd:element name="messageContent" type="xsd:string" minOccurs="0"/>
+         <xsd:element name="messageId" type="xsd:long" minOccurs="0"/>
+         <xsd:element name="messageType" type="xsd:string" minOccurs="0"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="particepentEntered">
+      <xsd:sequence>
+         <xsd:element name="corporateId" type="xsd:string" minOccurs="0"/>
+         <xsd:element name="loginName" type="xsd:string" minOccurs="0"/>
+         <xsd:element name="participentEnterId" type="xsd:long" minOccurs="0"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="particepentExit">
+      <xsd:sequence>
+         <xsd:element name="corporateId" type="xsd:string" minOccurs="0"/>
+         <xsd:element name="loginName" type="xsd:string" minOccurs="0"/>
+         <xsd:element name="participentExitId" type="xsd:long" minOccurs="0"/>
+      </xsd:sequence>
+   </xsd:complexType>
+</xsd:schema>
