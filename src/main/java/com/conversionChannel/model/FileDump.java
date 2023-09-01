@@ -46,6 +46,10 @@ public class FileDump {
     List<FileTransferStarted> fileTransferedStarted;
     List<Message> message;
     List<FileTransferEnd> fileTransferedEnd;
+    List<Audio> audio;
+    List<Invite> invite;
+    
+    
     public List<Audio> getAudio() {
 		return audio;
 	}
@@ -58,8 +62,7 @@ public class FileDump {
 	public void setInvite(List<Invite> invite) {
 		this.invite = invite;
 	}
-	List<Audio> audio;
-    List<Invite> invite;
+	
     public long getFileDumpId() {
 		return fileDumpId;
 	}

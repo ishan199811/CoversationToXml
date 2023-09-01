@@ -11,15 +11,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import com.conversionChannel.model.Audio;
 import com.conversionChannel.model.FileDump;
 import com.conversionChannel.model.FileTransferEnd;
 import com.conversionChannel.model.FileTransferStarted;
+import com.conversionChannel.model.Invite;
 import com.conversionChannel.model.Message;
 import com.conversionChannel.model.ParticipentEnter;
 import com.conversionChannel.model.ParticipentLeft;
 import com.conversionChannel.model.RequestFileDump;
+import com.conversionChannel.repository.AudioRepository;
 import com.conversionChannel.repository.FileTransferEndRepository;
 import com.conversionChannel.repository.FileTransferStartRepository;
+import com.conversionChannel.repository.InviteRepository;
 import com.conversionChannel.repository.MessageRepository;
 import com.conversionChannel.repository.ParticipentEnterRepository;
 import com.conversionChannel.repository.ParticipentLeftRepository;
@@ -32,6 +36,8 @@ import com.conversionChannel.service.XmlConversionService;
 
 @Service
 public class XmlConversionServiceImpl implements XmlConversionService{
+	@Autowired
+	InviteRepository inviteRepository;
 	
 	@Autowired
 	MessageRepository messageRepository;
@@ -52,6 +58,10 @@ public class XmlConversionServiceImpl implements XmlConversionService{
 	RequestFileDumpRepository requestFileDumpRepository;
 	
 	@Autowired
+	AudioRepository audioRepository;
+	
+	
+	@Autowired
 	ValidationService validationService;
 	
 	
@@ -67,12 +77,13 @@ public class XmlConversionServiceImpl implements XmlConversionService{
 	 	  XmlConversionServiceImpl cxs=new XmlConversionServiceImpl();
 	 	
 	 	  RequestFileDump requestFileDump= requestFileDumpRepository.getById(id);
-	 	    	List<Message> messageList=messageRepository.findAll();
+	 	  List<Invite> inviteList=inviteRepository.findAll();  	
+	 	  List<Message> messageList=messageRepository.findAll();
 	 	    	List<ParticipentEnter> list= participentEnterRepository.findAll();
 	 	    	List<FileTransferStarted> fileList=filetransferStartRepository.findAll();
 	 	    	List<FileTransferEnd> fileList1=fileTransferEndRepository.findAll();
 	 	    	List<ParticipentLeft> list2= participentLeftRepository.findAll();
-	 	    	
+	 	    	List<Audio> audioList=audioRepository.findAll();
 	 	    	fileDump.setRoomId(requestFileDump.getRoomId());
 	          	fileDump.setStartTimeUtc(date);
 	 	        fileDump.setEndTimeUtc(date);
@@ -80,6 +91,8 @@ public class XmlConversionServiceImpl implements XmlConversionService{
 	 	    	fileDump.setLoginName(requestFileDump.getLoginName());
 	 	    	fileDump.setParticipentEntered(list);
 	 	    	fileDump.setMessage(messageList);
+	 	    	fileDump.setInvite(inviteList);
+	 	    	fileDump.setAudio(audioList);
 	 	    	fileDump.setCallInitiator(requestFileDump.getCallInitiator());
 	 	    	fileDump.setCallType(requestFileDump.getCallType());
 	 	    	fileDump.setFileTransferedEnd(fileList1);
@@ -115,8 +128,7 @@ public class XmlConversionServiceImpl implements XmlConversionService{
 		
 		log.info("---------Coustomxml method called-----------");
 	    	Date date = new Date();    
-	    	String xmlElementString="";
-	 		
+	    	String xmlElementString=""; 	
 	    //Adding Head Elements
 	    	xmlElementString=xmlElementString+"<FileDump xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">"
 	 				+"\n"+"<Conversation Perspective=\"Abend term Finance disussion group channel\">"
@@ -129,7 +141,22 @@ public class XmlConversionServiceImpl implements XmlConversionService{
 	 				+"\n"+"<Channel>"+fileDump.getChannel()+"</Channel>"
 	 				+"\n";
 	    	
-	    
+	    //AddingElement for Invite
+	    	for(Invite invite:fileDump.getInvite()) {
+	    		invite.setLoginName(fileDump.getLoginName());
+	    		invite.setDateTimeUtc(date);
+	    		invite.setContent(fileDump.getBase64Content());
+	    		invite.setBase64Content(fileDump.getBase64Content());
+	    		invite.setCorporateEmailId(fileDump.getCorporateEmailId());
+	    		xmlElementString = xmlElementString+"\n"+"<Invite>"
+		      			+"\n"+"<LoginName>"+invite.getLoginName()+"</LoginName>"
+		      			+"\n"+"<DateTimeUTC>"+invite.getDateTimeUtc()+"</DateTimeUTC>"
+		      	+"\n"+"<Content>"+invite.getContent()+"</InternalFlag>"
+		      	+"\n"+"<Base64Content>"+invite.getBase64Content()+"<Base64Content/>"
+		      	+"\n"+"<CorporateEmailId>"+invite.getCorporateEmailId()+"<CorporateEmailID>"
+		      	+"\n"+"</Invite>"
+		      	+"\n";
+	    	}
 	    	//Adding  ParticipentEnter Elements 
 	    	for(ParticipentEnter pe:fileDump.getParticipentEntered()) {
 	      		pe.setDateTimeUtc( date);
@@ -160,7 +187,27 @@ public class XmlConversionServiceImpl implements XmlConversionService{
 	 	      	+"\n"+"</Message>"
 	 	      	+"\n"+"\n";
 	 		}
-	 		
+	 		//Adding element for audio
+	 	for(Audio audio:fileDump.getAudio()) {
+	 		audio.setDateTimeUtc(date.toString());;
+      		audio.setLoginName(fileDump.getLoginName());
+      		audio.setFileName(fileDump.getCorporateEmailId());
+ 			xmlElementString= xmlElementString +"<Audio>"
+ 	      			+"\n"+"<LoginName>"+audio.getLoginName()+"</LoginName>"
+ 	      			+"\n"+"<DateTimeUTC>"+audio.getDateTimeUtc()+"</DateTimeUTC>"
+ 	      	+"\n"+"<FileName>"+audio.getFileName()+"</FileName>"
+ 	      	+"\n"+"<FileSize>"+audio.getFileSize()+"</FileSize>"
+ 	      	+"\n"+"<FileType>"+audio.getFiletype()+"</FileType>"
+ 	      	+"\n"+"<RecordingDuration>"+audio.getRecordingDuration()+"</RecordingDuration>"
+ 	        +"\n"+"<CallDirection>"+audio.getCallDuration()+"</CallDirection>"
+ 	    	+"\n"+"<AudioCodec>"+audio.getAudioCodec()+"</AudioCodec>"
+ 	    	+"\n"+"<RecordingType>"+audio.getRecordingType()+"</RecordingType>"
+ 	    	+"\n"+"<FileEventType>"+audio.getFileEventType()+"</FileEventType>"
+ 	        +"\n"+"<FileId>"+audio.getFiled()+"</FileId>"
+ 	        +"\n"+"<Attributes>"+audio.getAttributes()+"</Attributes>"
+         	+"\n"+"</Audio>"
+ 	      	+"\n"+"\n";
+	 	}
 	 		
 	 		//Adding FiletranferStarted Elements
 	 		log.info("-------Adding FiletranferStarted Elements--------");

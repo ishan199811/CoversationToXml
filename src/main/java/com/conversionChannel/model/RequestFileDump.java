@@ -55,9 +55,35 @@ public class RequestFileDump {
 	
 	String participantEntered;
 	
+	String content;
 	
+	String fileSize;
+	
+	String fileType;
+	
+	String recordingDuration;
+	
+	String callDirection;
+	
+	String audioCodec;
+	
+	String recordingType;
+	
+	String fileEventType;
+	
+	String fileId;
+	
+	String attributes;
 	public long getId() {
 		return id;
+	}
+
+	public String getContent() {
+		return content;
+	}
+
+	public void setContent(String content) {
+		this.content = content;
 	}
 
 	public void setId(long id) {
