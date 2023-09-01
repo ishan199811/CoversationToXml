@@ -5,8 +5,8 @@ import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 
-
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -26,6 +26,8 @@ import com.conversionChannel.repository.ParticipentLeftRepository;
 import com.conversionChannel.repository.RequestFileDumpRepository;
 import com.conversionChannel.service.ValidationService;
 import com.conversionChannel.service.XmlConversionService;
+
+
 
 
 @Service
@@ -52,9 +54,15 @@ public class XmlConversionServiceImpl implements XmlConversionService{
 	@Autowired
 	ValidationService validationService;
 	
+	
+	private static final Logger log = LoggerFactory.getLogger( XmlConversionServiceImpl.class);
+
+	
 	@Override
 	 public  ResponseEntity<?> creatingXML(Long id)  throws  IOException  {
-		  Date date = new Date();    
+		 
+		log.info("--------Creating xml method called---------");
+		Date date = new Date();    
           FileDump fileDump = new FileDump();
 	 	  XmlConversionServiceImpl cxs=new XmlConversionServiceImpl();
 	 	
@@ -84,26 +92,28 @@ public class XmlConversionServiceImpl implements XmlConversionService{
 	 	 
 	 	    	//Validating Elements 
 	 	    	ResponseEntity<?> re = validationService.validateTheXmlElements(fileDump);
-	 	    
-	 	    	
 	 	    	if(re!=null) {
 	 	    		return ResponseEntity.ok(re);
 	 	    	}
 	 	    	//calling coustomXml
 	 	    	String finalxmlElementString=cxs.coustomXML(fileDump);
-		     	//Writing Converted Xml String into the file
-	 			FileWriter file1 = new FileWriter("/Applications/untitled folder/XML/XmlForSmarsh.xml");
+		     	
+	 	    	
+	 	    	//Writing Converted Xml String into the file
+	 			FileWriter file1 = new FileWriter("/Applications/untitled folder/XML/XmlFor.xml");
 			    file1.write(finalxmlElementString);   
 	            file1.flush();  
-	            System.out.println("Your XML data is successfully written into Samplexml.xml");  
+	            log.info("------------Your XML data is successfully written into XmlFor.xml---------");  
 	            file1.close();  
-	 	      return ResponseEntity.ok(finalxmlElementString);
+	 	      return ResponseEntity.ok("Your XML data is successfully written into XmlFor.xml");
 	 	    	
 	 	    	}
 	
 	
 	//Creating String for Xml Elements
 	public  String  coustomXML( FileDump fileDump) throws  IOException {
+		
+		log.info("---------Coustomxml method called-----------");
 	    	Date date = new Date();    
 	    	String xmlElementString="";
 	 		
@@ -151,7 +161,9 @@ public class XmlConversionServiceImpl implements XmlConversionService{
 	 	      	+"\n"+"\n";
 	 		}
 	 		
+	 		
 	 		//Adding FiletranferStarted Elements
+	 		log.info("-------Adding FiletranferStarted Elements--------");
 	 		for(FileTransferStarted fts:fileDump.getFileTransferedStarted()) {
 	      		fts.setDateTimeUtc( date);
 	      		fts.setLoginName(fileDump.getLoginName());

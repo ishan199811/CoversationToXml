@@ -22,6 +22,44 @@ public class FileDump {
     protected String base64FileName;
     protected String callInitiator;
     protected String callType;
+    protected String channel;
+    protected String corporateEmailId;
+    @XmlSchemaType(name = "dateTime")
+    protected Date endTimeUtc;
+    protected String fileTransferStatus;
+   
+    protected String loginName;
+   
+    protected String messageId;
+    protected String messageType;
+    protected String network;
+    protected String participantEntered;
+    
+    @XmlSchemaType(name = "dateTime")
+    protected Date startTimeUtc;
+    protected String status;
+    protected String threadId;
+    protected String userFileName;
+    protected String vendor;
+    List<ParticipentEnter> participentEntered;
+    List<ParticipentLeft> participentExit;
+    List<FileTransferStarted> fileTransferedStarted;
+    List<Message> message;
+    List<FileTransferEnd> fileTransferedEnd;
+    public List<Audio> getAudio() {
+		return audio;
+	}
+	public void setAudio(List<Audio> audio) {
+		this.audio = audio;
+	}
+	public List<Invite> getInvite() {
+		return invite;
+	}
+	public void setInvite(List<Invite> invite) {
+		this.invite = invite;
+	}
+	List<Audio> audio;
+    List<Invite> invite;
     public long getFileDumpId() {
 		return fileDumpId;
 	}
@@ -172,28 +210,5 @@ public class FileDump {
 	public void setFileTransferedEnd(List<FileTransferEnd> fileTransferedEnd) {
 		this.fileTransferedEnd = fileTransferedEnd;
 	}
-	protected String channel;
-    protected String corporateEmailId;
-    @XmlSchemaType(name = "dateTime")
-    protected Date endTimeUtc;
-    protected String fileTransferStatus;
-   
-    protected String loginName;
-   
-    protected String messageId;
-    protected String messageType;
-    protected String network;
-    protected String participantEntered;
-    
-    @XmlSchemaType(name = "dateTime")
-    protected Date startTimeUtc;
-    protected String status;
-    protected String threadId;
-    protected String userFileName;
-    protected String vendor;
-    List<ParticipentEnter> participentEntered;
-    List<ParticipentLeft> participentExit;
-    List<FileTransferStarted> fileTransferedStarted;
-    List<Message> message;
-    List<FileTransferEnd> fileTransferedEnd;
+	
 }

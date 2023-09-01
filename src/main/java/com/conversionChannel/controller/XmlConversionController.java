@@ -2,8 +2,8 @@ package com.conversionChannel.controller;
 
 import java.io.IOException;
 
-
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.conversionChannel.service.XmlConversionService;
 
+
 @RestController
 public class XmlConversionController {
 	
@@ -19,10 +20,11 @@ public class XmlConversionController {
 	@Autowired
 	XmlConversionService xmlConversionService;
 	
+	private static final Logger log = LoggerFactory.getLogger(XmlConversionController.class);
 	
 	@GetMapping("/createXml/{id}")
 	public ResponseEntity<?> createXmlFile(@PathVariable Long id ) throws IOException{
-		
+		log.info("---- /createXml/{id} -----url called-------");
 		return ResponseEntity.ok(xmlConversionService.creatingXML(id));
 	}
 
