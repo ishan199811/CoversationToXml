@@ -118,7 +118,7 @@ public class XmlConversionServiceImpl implements XmlConversionService{
 	 	    		return ResponseEntity.ok(re);
 	 	    	}
 	 	    	
-	 	    	//checking file type if i value is 2,3,5 ghen it will create  XMLForChatInteraction
+	 	    	//checking file type if i value is 2,3,5 then it will create  XMLForChatInteraction
 	 	    	if(i==3||i==5||i==2) {
 	 	    		return ResponseEntity.ok(cxs.coustomXMLForChatInteraction(fileDump,i));	
 	 	    	}
@@ -287,15 +287,32 @@ public class XmlConversionServiceImpl implements XmlConversionService{
 	 		
 	 		 //returning the final created string of Elements
 	 		 String finalXmlString = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>"+"\n"+xmlElementString ;  
-	 		//Writing Converted Xml String into the file
-	 			FileWriter file1 = new FileWriter("/Applications/untitled folder/XML/XmlForChatInteraction.xml");
+	 		
+	 		 //writing xml for 3 attribute message
+	 		 if(i==3) {
+	 		 //Writing Converted Xml String into the file
+	 			FileWriter file1 = new FileWriter("/Applications/untitled folder/XML/XmlForChatInteraction3.xml");
 			    file1.write(finalXmlString);   
 	            file1.flush();  
-	            log.info("------------Your XML data is successfully written into XmlForChatInteraction.xml---------");  
+	            log.info("------------Your XML data is successfully written into XmlForChatInteraction3.xml---------");  
 	            file1.close();         
+	 		return ResponseEntity.ok("Your XML data is successfully written into XmlForChatInteraction3.xml");
+	 		 }
+	 		 
+	 		 //writing xml for 5 message attribute
+	 		 if(i==5) {
+		 		 //Writing Converted Xml String into the file
+		 			FileWriter file1 = new FileWriter("/Applications/untitled folder/XML/XmlForChatInteraction5.xml");
+				    file1.write(finalXmlString);   
+		            file1.flush();  
+		            log.info("------------Your XML data is successfully written into XmlForChatInteraction5.xml---------");  
+		            file1.close();         
+		 		return ResponseEntity.ok("Your XML data is successfully written into XmlForChatInteraction5.xml");
+		 		 }
+	 		 else {
 	 		return ResponseEntity.ok("Your XML data is successfully written into XmlForChatInteraction.xml");
-	 		    }
-	
+	 		 }
+	}
 	
 	     //Creating String for RoomChatInteraction Xml Elements
 		public  ResponseEntity<?>  coustomXMLForRoomChatInteraction( FileDump fileDump) throws  IOException, ParseException {
