@@ -1,6 +1,5 @@
 package com.conversionChannel.model;
 
-import java.util.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -18,7 +17,7 @@ String corporateId ;
 
 String loginName;
 
-Date dateTimeUtc;
+Long dateTimeUtc;
 
 String internalFlag;
 
@@ -60,11 +59,11 @@ String corporateEmailid;
 
 	
 
-public Date getDateTimeUtc() {
+public long getDateTimeUtc() {
 	return dateTimeUtc;
 }
 
-public void setDateTimeUtc(java.util.Date date) {
+public void setDateTimeUtc(long date) {
 	this.dateTimeUtc = date;
 }
 

@@ -25,14 +25,7 @@ public ResponseEntity<?> validateTheXmlElements(FileDump fileDump){
 	
 		return ResponseEntity.ok("CallInitiator Not valid");
 	}
-	if(fileDump.getEndTimeUtc()==null) {
-		
-		return ResponseEntity.ok("EndTimeUtc Not valid");
-	}
-	if(fileDump.getStartTimeUtc()==null) {
-		
-		return ResponseEntity.ok("StartTimeUtc Not valid");
-	}
+	
 if(fileDump.getCorporateEmailId()==null) {
 		
 		return ResponseEntity.ok("CorporateEmailId Not valid");

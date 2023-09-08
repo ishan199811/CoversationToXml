@@ -1,6 +1,6 @@
 package com.conversionChannel.model;
 
-import java.util.Date;
+
 import java.util.List;
 
 import javax.persistence.GeneratedValue;
@@ -25,7 +25,7 @@ public class FileDump {
     protected String channel;
     protected String corporateEmailId;
     @XmlSchemaType(name = "dateTime")
-    protected Date endTimeUtc;
+    protected Long endTimeUtc;
     protected String fileTransferStatus;
    
     protected String loginName;
@@ -36,7 +36,7 @@ public class FileDump {
     protected String participantEntered;
     
     @XmlSchemaType(name = "dateTime")
-    protected Date startTimeUtc;
+    protected long startTimeUtc;
     protected String status;
     protected String threadId;
     protected String userFileName;
@@ -111,10 +111,10 @@ public class FileDump {
 	public void setCorporateEmailId(String corporateEmailId) {
 		this.corporateEmailId = corporateEmailId;
 	}
-	public Date getEndTimeUtc() {
+	public long getEndTimeUtc() {
 		return endTimeUtc;
 	}
-	public void setEndTimeUtc(Date endTimeUtc) {
+	public void setEndTimeUtc(long endTimeUtc) {
 		this.endTimeUtc = endTimeUtc;
 	}
 	public String getFileTransferStatus() {
@@ -153,10 +153,10 @@ public class FileDump {
 	public void setParticipantEntered(String participantEntered) {
 		this.participantEntered = participantEntered;
 	}
-	public Date getStartTimeUtc() {
+	public long getStartTimeUtc() {
 		return startTimeUtc;
 	}
-	public void setStartTimeUtc(Date startTimeUtc) {
+	public void setStartTimeUtc(long startTimeUtc) {
 		this.startTimeUtc = startTimeUtc;
 	}
 	public String getStatus() {

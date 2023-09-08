@@ -17,7 +17,7 @@ public class Audio {
 	 
 	 String loginName;
 	 
-	 String dateTimeUtc;
+	 Long dateTimeUtc;
 	 
 	 String fileName;
 	 
@@ -55,11 +55,11 @@ public class Audio {
 		this.loginName = loginName;
 	}
 
-	public String getDateTimeUtc() {
+	public long getDateTimeUtc() {
 		return dateTimeUtc;
 	}
 
-	public void setDateTimeUtc(String dateTimeUtc) {
+	public void setDateTimeUtc(long dateTimeUtc) {
 		this.dateTimeUtc = dateTimeUtc;
 	}
 

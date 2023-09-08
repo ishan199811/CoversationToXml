@@ -1,6 +1,7 @@
 package com.conversionChannel.controller;
 
 import java.io.IOException;
+import java.text.ParseException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,10 +23,10 @@ public class XmlConversionController {
 	
 	private static final Logger log = LoggerFactory.getLogger(XmlConversionController.class);
 	
-	@GetMapping("/createXml/{id}")
-	public ResponseEntity<?> createXmlFile(@PathVariable Long id ) throws IOException{
+	@GetMapping("/createXml/{id}/{i}")
+	public ResponseEntity<?> createXmlFile(@PathVariable Long id , @PathVariable int i ) throws IOException, ParseException{
 		log.info("---- /createXml/{id} -----url called-------");
-		return ResponseEntity.ok(xmlConversionService.creatingXML(id));
+		return ResponseEntity.ok(xmlConversionService.creatingXML(id,i));
 	}
 
 }

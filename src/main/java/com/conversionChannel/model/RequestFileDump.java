@@ -14,7 +14,6 @@ public class RequestFileDump {
 	 @GeneratedValue(strategy = GenerationType.IDENTITY)
 	long id;
 
-	
 	String roomId;
 	
 	Date startTimeUtc;
@@ -90,9 +89,7 @@ public class RequestFileDump {
 		this.id = id;
 	}
 
-
-
-	public String getRoomId() {
+    public String getRoomId() {
 		return roomId;
 	}
 

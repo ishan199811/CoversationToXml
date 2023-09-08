@@ -1,6 +1,6 @@
 package com.conversionChannel.model;
 
-import java.util.Date;
+
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -15,7 +15,7 @@ public class FileTransferEnd {
 	
 	String loginName;
 	
-	Date dateTimeUtc;
+	Long dateTimeUtc;
 	
 	String userFileName;
 	
@@ -55,11 +55,11 @@ public class FileTransferEnd {
 
 	
 
-	public Date getDateTimeUtc() {
+	public long getDateTimeUtc() {
 		return dateTimeUtc;
 	}
 
-	public void setDateTimeUtc(Date dateTimeUtc) {
+	public void setDateTimeUtc(long dateTimeUtc) {
 		this.dateTimeUtc = dateTimeUtc;
 	}
 
