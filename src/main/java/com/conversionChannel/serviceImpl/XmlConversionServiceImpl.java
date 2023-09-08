@@ -22,6 +22,7 @@ import com.conversionChannel.model.Message;
 import com.conversionChannel.model.ParticipentEnter;
 import com.conversionChannel.model.ParticipentLeft;
 import com.conversionChannel.model.RequestFileDump;
+import com.conversionChannel.model.RequestFileJson;
 import com.conversionChannel.repository.AudioRepository;
 import com.conversionChannel.repository.FileTransferEndRepository;
 import com.conversionChannel.repository.FileTransferStartRepository;
@@ -128,6 +129,57 @@ public class XmlConversionServiceImpl implements XmlConversionService{
 	 	    	
 	 	    	}
 	
+	@Override
+	 public  ResponseEntity<?> creatingXMLwithJson(RequestFileJson requestFileDump, int i)  throws  IOException, ParseException  {
+		 
+		log.info("--------Creating xml method called---------");
+		// input string
+		String s = "2022.07.19 11:42:30:423";
+		
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy.MM.dd HH:mm:ss:SSS");
+		// parse to a millis
+		Date date = formatter.parse(s);
+		// get epoch millisecond
+		long millis = date.getTime();
+		System.out.println(millis); // 1500475350423
+         FileDump fileDump = new FileDump();
+	 	  XmlConversionServiceImpl cxs=new XmlConversionServiceImpl();
+	 	
+	 	 
+	 	    	fileDump.setRoomId(requestFileDump.getRoomId());
+	          	fileDump.setStartTimeUtc(millis);
+	 	        fileDump.setEndTimeUtc(millis);
+	 	        fileDump.setBase64Content(requestFileDump.getBase64Content());
+	 	    	fileDump.setLoginName(requestFileDump.getLoginName());
+	 	    	fileDump.setParticipentEntered(requestFileDump.getParticipentEntered());
+	 	    	fileDump.setMessage(requestFileDump.getMessage());
+	 	    	fileDump.setInvite(requestFileDump.getInvite());
+	 	    	fileDump.setAudio(requestFileDump.getAudio());
+	 	    	fileDump.setCallInitiator(requestFileDump.getCallInitiator());
+	 	    	fileDump.setCallType(requestFileDump.getCallType());
+	 	    	fileDump.setFileTransferedEnd(requestFileDump.getFileTransferedEnd());
+	 	    	fileDump.setFileTransferedStarted(requestFileDump.getFileTransferedStarted());
+	 	    	fileDump.setParticipentExit(requestFileDump.getParticipentExit());
+	 	    	fileDump.setVendor(requestFileDump.getVendor());
+	 	    	fileDump.setNetwork(requestFileDump.getNetwork());
+	 	    	fileDump.setCorporateEmailId(requestFileDump.getCorporateEmailId());
+	 	    	fileDump.setStatus(requestFileDump.getStatus());
+	 	 
+	 	    	//Validating Elements 
+	 	    	ResponseEntity<?> re = validationService.validateTheXmlElements(fileDump);
+	 	    	if(re!=null) {
+	 	    		return ResponseEntity.ok(re);
+	 	    	}
+	 	    	
+	 	    	//checking file type if i value is 2,3,5 then it will create  XMLForChatInteraction
+	 	    	if(i==3||i==5||i==2) {
+	 	    		return ResponseEntity.ok(cxs.coustomXMLForChatInteraction(fileDump,i));	
+	 	    	}
+	 	    	
+	 	    	//else it will create file for XMLForRoomChatInteraction
+	 	    	return ResponseEntity.ok(cxs.coustomXMLForRoomChatInteraction(fileDump));
+	 	    	
+	 	    	}
 	
 	//Creating String for ChatInteraction Xml Elements
 	public  ResponseEntity<?>  coustomXMLForChatInteraction( FileDump fileDump, int i) throws  IOException, ParseException {
@@ -290,7 +342,6 @@ public class XmlConversionServiceImpl implements XmlConversionService{
 	 		
 	 		 //writing xml for 3 attribute message
 	 		 if(i==3) {
-	 		 //Writing Converted Xml String into the file
 	 			FileWriter file1 = new FileWriter("/Applications/untitled folder/XML/XmlForChatInteraction3.xml");
 			    file1.write(finalXmlString);   
 	            file1.flush();  
@@ -301,7 +352,6 @@ public class XmlConversionServiceImpl implements XmlConversionService{
 	 		 
 	 		 //writing xml for 5 message attribute
 	 		 if(i==5) {
-		 		 //Writing Converted Xml String into the file
 		 			FileWriter file1 = new FileWriter("/Applications/untitled folder/XML/XmlForChatInteraction5.xml");
 				    file1.write(finalXmlString);   
 		            file1.flush();  

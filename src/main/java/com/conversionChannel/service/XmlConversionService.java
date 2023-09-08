@@ -5,6 +5,8 @@ import java.text.ParseException;
 
 import org.springframework.http.ResponseEntity;
 
+import com.conversionChannel.model.RequestFileJson;
+
 public interface XmlConversionService {
 
 
@@ -13,5 +15,9 @@ public interface XmlConversionService {
 	
 
 	ResponseEntity<?> creatingXML(Long id, int i) throws IOException, ParseException;
+
+	
+
+	ResponseEntity<?> creatingXMLwithJson(RequestFileJson requestFileDump, int i) throws IOException, ParseException;
 
 }

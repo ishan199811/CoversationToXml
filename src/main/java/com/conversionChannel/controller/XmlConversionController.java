@@ -9,8 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.conversionChannel.model.RequestFileJson;
 import com.conversionChannel.service.XmlConversionService;
 
 
@@ -27,6 +29,11 @@ public class XmlConversionController {
 	public ResponseEntity<?> createXmlFile(@PathVariable Long id , @PathVariable int i ) throws IOException, ParseException{
 		log.info("---- /createXml/{id} -----url called-------");
 		return ResponseEntity.ok(xmlConversionService.creatingXML(id,i));
+	}
+	@GetMapping("/createXmlWithJson/{i}")
+	public ResponseEntity<?> createXmlFileWithJsonBody(@RequestBody RequestFileJson requestFileJson , @PathVariable int i ) throws IOException, ParseException{
+		log.info("---- /createXml/{id} -----url called-------");
+		return ResponseEntity.ok(xmlConversionService.creatingXMLwithJson(requestFileJson,i));
 	}
 
 }
