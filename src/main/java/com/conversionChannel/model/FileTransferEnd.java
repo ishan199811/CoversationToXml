@@ -22,7 +22,23 @@ public class FileTransferEnd {
 	String fileName;
 	
 	String status;
-	 
+	
+	String corporateEmailId;
+	
+	 Long participentId;
+		
+
+		public Long getParticipentId() {
+			return participentId;
+		}
+
+		public void setParticipentId(Long participentId) {
+			this.participentId = participentId;
+		}
+	public void setDateTimeUtc(Long dateTimeUtc) {
+		this.dateTimeUtc = dateTimeUtc;
+	}
+
 	public String getCorporateEmailId() {
 		return corporateEmailId;
 	}
@@ -33,7 +49,7 @@ public class FileTransferEnd {
 
 
 	
-	String corporateEmailId;
+	
 
 	public Long getFileTransferEndId() {
 		return fileTransferEndId;

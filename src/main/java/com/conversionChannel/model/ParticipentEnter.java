@@ -21,6 +21,19 @@ Long dateTimeUtc;
 
 String internalFlag;
 
+Long fileDumpId;
+public Long getFileDumpId() {
+	return fileDumpId;
+}
+
+public void setFileDumpId(Long fileDumpId) {
+	this.fileDumpId = fileDumpId;
+}
+
+public void setDateTimeUtc(Long dateTimeUtc) {
+	this.dateTimeUtc = dateTimeUtc;
+}
+
 public String getInternalFlag() {
 	return internalFlag;
 }

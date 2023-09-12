@@ -23,7 +23,19 @@ public class ParticipentLeft {
 String conversionId;
 
 String loginName;
-	
+Long fileDumpId;
+	public Long getFileDumpId() {
+	return fileDumpId;
+}
+
+public void setFileDumpId(Long fileDumpId) {
+	this.fileDumpId = fileDumpId;
+}
+
+public void setDateTimeUtc(Long dateTimeUtc) {
+	this.dateTimeUtc = dateTimeUtc;
+}
+
 	public Long getParticipentExitId() {
 		return participentExitId;
 	}

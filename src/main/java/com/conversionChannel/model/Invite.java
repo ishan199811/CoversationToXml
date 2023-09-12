@@ -25,6 +25,21 @@ public class Invite {
 	 String base64Content;
 	 
 	 String corporateEmailId;
+	 
+	 Long participentId;
+		
+
+		public Long getParticipentId() {
+			return participentId;
+		}
+
+		public void setParticipentId(Long participentId) {
+			this.participentId = participentId;
+		}
+
+	public void setDateTimeUtc(Long dateTimeUtc) {
+		this.dateTimeUtc = dateTimeUtc;
+	}
 
 	public Long getInviteId() {
 		return inviteId;

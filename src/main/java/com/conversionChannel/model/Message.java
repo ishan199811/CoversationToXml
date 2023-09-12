@@ -17,7 +17,21 @@ public class Message {
 	String messageType;
 	String corporateEmailId;
 	String messageContent;
+	 Long participentId;
 	
+
+	public Long getParticipentId() {
+		return participentId;
+	}
+
+	public void setParticipentId(Long participentId) {
+		this.participentId = participentId;
+	}
+
+	public void setDateTimeUtc(Long dateTimeUtc) {
+		this.dateTimeUtc = dateTimeUtc;
+	}
+
 	public Long getMessageId() {
 		return messageId;
 	}

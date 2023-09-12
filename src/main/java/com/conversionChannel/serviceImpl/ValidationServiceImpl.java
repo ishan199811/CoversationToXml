@@ -42,14 +42,14 @@ if(fileDump.getParticipentExit()==null) {
 	
 	return ResponseEntity.ok("ParticipentLeft Not valid");
 }
-if(fileDump.getFileTransferedStarted()==null) {
-	
-	return ResponseEntity.ok("FileTransferedStarted Not valid");
-}
-if(fileDump.getFileTransferedEnd()==null) {
-	
-	return ResponseEntity.ok("FileTransferedEnd Not valid");
-}
+//if(fileDump.getFileTransferedStarted()==null) {
+//	
+//	return ResponseEntity.ok("FileTransferedStarted Not valid");
+//}
+//if(fileDump.getFileTransferedEnd()==null) {
+//	
+//	return ResponseEntity.ok("FileTransferedEnd Not valid");
+//}
 if(fileDump.getLoginName()==null) {
 	
 	return ResponseEntity.ok("LoginName Not valid");

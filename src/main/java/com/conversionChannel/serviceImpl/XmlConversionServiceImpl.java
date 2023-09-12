@@ -4,6 +4,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -87,13 +88,21 @@ public class XmlConversionServiceImpl implements XmlConversionService{
 	 	  XmlConversionServiceImpl cxs=new XmlConversionServiceImpl();
 	 	
 	 	  RequestFileDump requestFileDump= requestFileDumpRepository.getById(id);
-	 	  List<Invite> inviteList=inviteRepository.findAll();  	
-	 	  List<Message> messageList=messageRepository.findAll();
-	 	    	List<ParticipentEnter> list= participentEnterRepository.findAll();
-	 	    	List<FileTransferStarted> fileList=filetransferStartRepository.findAll();
-	 	    	List<FileTransferEnd> fileList1=fileTransferEndRepository.findAll();
-	 	    	List<ParticipentLeft> list2= participentLeftRepository.findAll();
-	 	    	List<Audio> audioList=audioRepository.findAll();
+	 	  
+	 	    	List<ParticipentEnter> list= participentEnterRepository.findByFileDumpId(id);
+	 	    	List<Invite> inviteList=new ArrayList<Invite>();  	
+	 		 	  List<Message> messageList=new ArrayList<Message>();  
+	 		 	List<Audio> audioList=new ArrayList<Audio>();  
+	 	    	  List<FileTransferStarted> fileList=new ArrayList<FileTransferStarted>();  
+	 	    	List<FileTransferEnd> fileList1=new ArrayList<FileTransferEnd>();  
+	 	    	for(ParticipentEnter p:list) {
+	 	    	audioList.addAll(audioRepository.findByParticipentId(p.getParticipentEnterId()));
+	 	    		messageList.addAll(messageRepository.findByParticipentId(p.getParticipentEnterId()));
+	 	    		inviteList.addAll(inviteRepository.findByParticipentId(p.getParticipentEnterId()));
+	 	    		fileList.addAll(filetransferStartRepository.findByParticipentId(p.getParticipentEnterId()));
+	 	    		fileList1.addAll(fileTransferEndRepository.findByParticipentId(p.getParticipentEnterId()));
+	 	    	}
+	 	    	List<ParticipentLeft> list2= participentLeftRepository.findByFileDumpId(id);
 	 	    	fileDump.setRoomId(requestFileDump.getRoomId());
 	          	fileDump.setStartTimeUtc(millis);
 	 	        fileDump.setEndTimeUtc(millis);
@@ -201,11 +210,9 @@ public class XmlConversionServiceImpl implements XmlConversionService{
 	    //AddingElement for Invite
 	    	for(Invite invite:fileDump.getInvite()) {
 	    		log.info(invite.toString());
-	    		invite.setLoginName(fileDump.getLoginName());
+	    		
 	    		invite.setDateTimeUtc(fileDump.getStartTimeUtc());
-	    		invite.setContent(fileDump.getBase64Content());
-	    		invite.setBase64Content(fileDump.getBase64Content());
-	    		invite.setCorporateEmailId(fileDump.getCorporateEmailId());
+	    		
 	    		xmlElementString = xmlElementString+"\n"+"<Invite>"
 		      			+"\n"+"<LoginName>"+invite.getLoginName()+"</LoginName>"
 		      			+"\n"+"<DateTimeUTC>"+invite.getDateTimeUtc()+"</DateTimeUTC>"
@@ -218,8 +225,7 @@ public class XmlConversionServiceImpl implements XmlConversionService{
 	    	//Adding  ParticipentEnter Elements 
 	    	for(ParticipentEnter pe:fileDump.getParticipentEntered()) {
 	      		pe.setDateTimeUtc(fileDump.getEndTimeUtc());
-	      		pe.setLoginName(fileDump.getLoginName());
-	      		pe.setCorporateEmailid(fileDump.getCorporateEmailId());
+	      		
 	    xmlElementString= xmlElementString+"\n"+"<ParticipantEntered>"
 	      			+"\n"+"<LoginName>"+pe.getLoginName()+"</LoginName>"
 	      			+"\n"+"<DateTimeUTC>"+pe.getDateTimeUtc()+"</DateTimeUTC>"
@@ -237,8 +243,6 @@ public class XmlConversionServiceImpl implements XmlConversionService{
 	 		for(Message m:fileDump.getMessage()) {
 	 			
 	 			m.setDateTimeUtc(fileDump.getEndTimeUtc());
-	      		m.setLoginName(fileDump.getLoginName());
-	      		m.setCorporateEmailId(fileDump.getCorporateEmailId());
 	 			xmlElementString= xmlElementString +"<Message>"
 	 	      			+"\n"+"<LoginName>"+m.getLoginName()+"</LoginName>"
 	 	      			+"\n"+"<DateTimeUTC>"+m.getDateTimeUtc()+"</DateTimeUTC>"
@@ -269,8 +273,7 @@ public class XmlConversionServiceImpl implements XmlConversionService{
 	 		//Adding element for audio
 	 	for(Audio audio:fileDump.getAudio()) {
 	 		audio.setDateTimeUtc(fileDump.getEndTimeUtc());;
-      		audio.setLoginName(fileDump.getLoginName());
-      		audio.setFileName(fileDump.getCorporateEmailId());
+      		
  			xmlElementString= xmlElementString +"<Audio>"
  	      	+"\n"+"<LoginName>"+audio.getLoginName()+"</LoginName>"
  	        +"\n"+"<DateTimeUTC>"+audio.getDateTimeUtc()+"</DateTimeUTC>"
@@ -292,7 +295,7 @@ public class XmlConversionServiceImpl implements XmlConversionService{
 	 		log.info("-------Adding FiletranferStarted Elements--------");
 	 		for(FileTransferStarted fts:fileDump.getFileTransferedStarted()) {
 	      		fts.setDateTimeUtc(fileDump.getEndTimeUtc());
-	      		fts.setLoginName(fileDump.getLoginName());
+	      		
 	      		xmlElementString= xmlElementString +"<FileTransferStarted>"
 	 	      			+"\n"+"<LoginName>"+fts.getLoginName()+"</LoginName>"
 	 	      			+"\n"+"<DateTimeUTC>"+fts.getDateTimeUtc()+"</DateTimeUTC>"
@@ -306,7 +309,7 @@ public class XmlConversionServiceImpl implements XmlConversionService{
 	 		//Adding FileTransferEnd Element
 	 		for(FileTransferEnd fts:fileDump.getFileTransferedEnd()) {
 	      		fts.setDateTimeUtc(fileDump.getEndTimeUtc());
-	      		fts.setLoginName(fileDump.getLoginName());
+	      		
 	      		xmlElementString= xmlElementString +"<FileTransferEnd>"
 	 	      			+"\n"+"<LoginName>"+fts.getLoginName()+"</LoginName>"
 	 	      			+"\n"+"<DateTimeUTC>"+fts.getDateTimeUtc()+"</DateTimeUTC>"
@@ -320,8 +323,7 @@ public class XmlConversionServiceImpl implements XmlConversionService{
 	 		//Adding ParticipentLeft Elements 
 	 		for(ParticipentLeft pe:fileDump.getParticipentExit()) {
 	      		pe.setDateTimeUtc(fileDump.getEndTimeUtc());
-	      		pe.setLoginName(fileDump.getLoginName());
-	      		pe.setCorporateEmailId(fileDump.getCorporateEmailId());
+	      		
 	    xmlElementString= xmlElementString +"<ParticipantLeft>"
 	      			+"\n"+"<LoginName>"+pe.getLoginName()+"</LoginName>"
 	      			+"\n"+"<DateTimeUTC>"+pe.getDateTimeUtc()+"</DateTimeUTC>"
@@ -360,6 +362,12 @@ public class XmlConversionServiceImpl implements XmlConversionService{
 		 		return ResponseEntity.ok("Your XML data is successfully written into XmlForChatInteraction5.xml");
 		 		 }
 	 		 else {
+	 			FileWriter file1 = new FileWriter("/Applications/untitled folder/XML/XmlForChatInteraction.xml");
+			    file1.write(finalXmlString);   
+	            file1.flush();  
+	            log.info("------------Your XML data is successfully written into XmlForChatInteraction.xml---------");  
+	            file1.close();         
+	 	
 	 		return ResponseEntity.ok("Your XML data is successfully written into XmlForChatInteraction.xml");
 	 		 }
 	}
@@ -374,14 +382,15 @@ public class XmlConversionServiceImpl implements XmlConversionService{
 		 				+"\n"+"<Conversation Perspective=\"Abend term Finance disussion group channel\">"
 		 				+"\n"+"<RoomId>"+fileDump.getRoomId()+"</RoomId>"
 		 				+"\n"+"<StartTimeUtc>"+fileDump.getStartTimeUtc()+"<StartTimeUtc/>"
-		 				+"\n";
+		 				+"\n"+"<CallInitiator>"+fileDump.getCallInitiator()+"</CallInitiator>"
+		 				+"\n"+"<Vendor>"+fileDump.getVendor()+"</Vendore>"
+		 				+"\n"+"<Network>"+fileDump.getNetwork()+"</Network>"+"\n";
 		    	
 		   
 		    	//Adding  ParticipentEnter Elements 
 		    	for(ParticipentEnter pe:fileDump.getParticipentEntered()) {
 		      		pe.setDateTimeUtc(fileDump.getEndTimeUtc());
-		      		pe.setLoginName(fileDump.getLoginName());
-		      		pe.setCorporateEmailid(fileDump.getCorporateEmailId());
+		      		
 		    xmlElementString= xmlElementString+"\n"+"<ParticipantEntered>"
 		      			+"\n"+"<LoginName>"+pe.getLoginName()+"</LoginName>"
 		      			+"\n"+"<DateTimeUTC>"+pe.getDateTimeUtc()+"</DateTimeUTC>"
@@ -397,8 +406,7 @@ public class XmlConversionServiceImpl implements XmlConversionService{
 		 		for(Message m:fileDump.getMessage()) {
 		 			
 		 			m.setDateTimeUtc(fileDump.getEndTimeUtc());
-		      		m.setLoginName(fileDump.getLoginName());
-		      		m.setCorporateEmailId(fileDump.getCorporateEmailId());
+		      		
 		 			xmlElementString= xmlElementString +"<Message>"
 		 	      			+"\n"+"<LoginName>"+m.getLoginName()+"</LoginName>"
 		 	      			+"\n"+"<DateTimeUTC>"+m.getDateTimeUtc()+"</DateTimeUTC>"
@@ -416,7 +424,7 @@ public class XmlConversionServiceImpl implements XmlConversionService{
 		 		log.info("-------Adding FiletranferStarted Elements--------");
 		 		for(FileTransferStarted fts:fileDump.getFileTransferedStarted()) {
 		      		fts.setDateTimeUtc(fileDump.getEndTimeUtc());
-		      		fts.setLoginName(fileDump.getLoginName());
+		      		
 		      		xmlElementString= xmlElementString +"<FileTransferStarted>"
 		 	      			+"\n"+"<LoginName>"+fts.getLoginName()+"</LoginName>"
 		 	      			+"\n"+"<DateTimeUTC>"+fts.getDateTimeUtc()+"</DateTimeUTC>"
@@ -430,7 +438,7 @@ public class XmlConversionServiceImpl implements XmlConversionService{
 		 		//Adding FileTransferEnd Element
 		 		for(FileTransferEnd fts:fileDump.getFileTransferedEnd()) {
 		      		fts.setDateTimeUtc(fileDump.getEndTimeUtc());
-		      		fts.setLoginName(fileDump.getLoginName());
+		      		
 		      		xmlElementString= xmlElementString +"<FileTransferEnd>"
 		 	      			+"\n"+"<LoginName>"+fts.getLoginName()+"</LoginName>"
 		 	      			+"\n"+"<DateTimeUTC>"+fts.getDateTimeUtc()+"</DateTimeUTC>"
@@ -444,7 +452,7 @@ public class XmlConversionServiceImpl implements XmlConversionService{
 		 		//Adding ParticipentLeft Elements 
 		 		for(ParticipentLeft pe:fileDump.getParticipentExit()) {
 		      		pe.setDateTimeUtc(fileDump.getEndTimeUtc());
-		      		pe.setLoginName(fileDump.getLoginName());
+		      		
 		      		pe.setCorporateEmailId(fileDump.getCorporateEmailId());
 		    xmlElementString= xmlElementString +"<ParticipantLeft>"
 		      			+"\n"+"<LoginName>"+pe.getLoginName()+"</LoginName>"
