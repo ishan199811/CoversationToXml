@@ -16,32 +16,32 @@ public class ValidationServiceImpl implements ValidationService{
 @Override
 public ResponseEntity<?> validateTheXmlElements(FileDump fileDump){
 	log.info("------------Validation method called----------");
-	
-	if(fileDump.getCorporateEmailId()==null) {
-	
-		return ResponseEntity.ok("CorporateEmailId Not valid");
-}
-	if(fileDump.getCallInitiator()==null) {
-	
-		return ResponseEntity.ok("CallInitiator Not valid");
-	}
-	
-if(fileDump.getCorporateEmailId()==null) {
-		
-		return ResponseEntity.ok("CorporateEmailId Not valid");
-	}
-if(fileDump.getVendor()==null) {
-	
-	return ResponseEntity.ok("Vendor Not valid");
-}
-if(fileDump.getParticipentEntered()==null) {
-	
-	return ResponseEntity.ok("ParticipentEntered Not valid");
-}
-if(fileDump.getParticipentExit()==null) {
-	
-	return ResponseEntity.ok("ParticipentLeft Not valid");
-}
+//	
+//	if(fileDump.getCorporateEmailId()==null) {
+//	
+//		return ResponseEntity.ok("CorporateEmailId Not valid");
+//}
+//	if(fileDump.getCallInitiator()==null) {
+//	
+//		return ResponseEntity.ok("CallInitiator Not valid");
+//	}
+//	
+//if(fileDump.getCorporateEmailId()==null) {
+//		
+//		return ResponseEntity.ok("CorporateEmailId Not valid");
+//	}
+//if(fileDump.getVendor()==null) {
+//	
+//	return ResponseEntity.ok("Vendor Not valid");
+//}
+//if(fileDump.getParticipentEntered()==null) {
+//	
+//	return ResponseEntity.ok("ParticipentEntered Not valid");
+//}
+//if(fileDump.getParticipentExit()==null) {
+//	
+//	return ResponseEntity.ok("ParticipentLeft Not valid");
+//}
 //if(fileDump.getFileTransferedStarted()==null) {
 //	
 //	return ResponseEntity.ok("FileTransferedStarted Not valid");
@@ -50,11 +50,12 @@ if(fileDump.getParticipentExit()==null) {
 //	
 //	return ResponseEntity.ok("FileTransferedEnd Not valid");
 //}
-if(fileDump.getLoginName()==null) {
-	
-	return ResponseEntity.ok("LoginName Not valid");
-}
-	return null;
+//if(fileDump.getLoginName()==null) {
+//	
+//	return ResponseEntity.ok("LoginName Not valid");
+//}
+return null;
+
 }
 }
 

@@ -134,7 +134,7 @@ public class XmlConversionServiceImpl implements XmlConversionService{
 	 	    	}
 	 	    	
 	 	    	//else it will create file for XMLForRoomChatInteraction
-	 	    	return ResponseEntity.ok(cxs.coustomXMLForRoomChatInteraction(fileDump));
+	 	    	return ResponseEntity.ok(cxs.coustomXMLForRoomChatInteraction(fileDump,i));
 	 	    	
 	 	    	}
 	
@@ -186,7 +186,7 @@ public class XmlConversionServiceImpl implements XmlConversionService{
 	 	    	}
 	 	    	
 	 	    	//else it will create file for XMLForRoomChatInteraction
-	 	    	return ResponseEntity.ok(cxs.coustomXMLForRoomChatInteraction(fileDump));
+	 	    	return ResponseEntity.ok(cxs.coustomXMLForRoomChatInteraction(fileDump,i));
 	 	    	
 	 	    	}
 	
@@ -373,7 +373,7 @@ public class XmlConversionServiceImpl implements XmlConversionService{
 	}
 	
 	     //Creating String for RoomChatInteraction Xml Elements
-		public  ResponseEntity<?>  coustomXMLForRoomChatInteraction( FileDump fileDump) throws  IOException, ParseException {
+		public  ResponseEntity<?>  coustomXMLForRoomChatInteraction( FileDump fileDump, int i) throws  IOException, ParseException {
 			
 			log.info("-----------coustomXMLForRoomChatInteraction method called-----------");
 		    	String xmlElementString=""; 	
@@ -471,13 +471,26 @@ public class XmlConversionServiceImpl implements XmlConversionService{
 		 		
 		 		 //returning the final created string of Elements
 		 		 String finalXmlString = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>"+"\n"+xmlElementString ;  
-		 			       
-		 		//Writing Converted Xml String into the file
+		 			    
+		 		 if(i==1) {
+		 			    	FileWriter file1 = new FileWriter("/Applications/untitled folder/XML/XmlForRoomChatInteractionJson.xml");
+		 			    	file1.write(finalXmlString);   
+				            file1.flush();  
+				            log.info("------------Your XML data is successfully written into XmlForRoomChatInteractionJson.xml---------");  
+				            file1.close();       	
+				            return ResponseEntity.ok("Your XML data is successfully written into XmlForRoomChatInteractionJson.xml");	   
+		 		 }   
+		 	
+		 			    else {
+		 			    //Writing Converted Xml String into the file
 		 			FileWriter file1 = new FileWriter("/Applications/untitled folder/XML/XmlForRoomChatInteraction.xml");
-				    file1.write(finalXmlString);   
+		 			file1.write(finalXmlString);   
 		            file1.flush();  
 		            log.info("------------Your XML data is successfully written into XmlForRoomChatInteraction.xml---------");  
-		            file1.close();         
+		            file1.close();
+		 			    }
+		 			
+		 			    
 		 		return ResponseEntity.ok("Your XML data is successfully written into XmlForRoomChatInteraction.xml");
 		 		    }
 	}
